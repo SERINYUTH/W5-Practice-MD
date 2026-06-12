@@ -24,32 +24,16 @@ enum ButtonStatus {
 }
 
 class Button extends StatefulWidget {
-  const Button({super.key, this.initStatus = ButtonStatus.notSelected});
-
-  final ButtonStatus initStatus;
+  const Button({super.key});
 
   @override
   State<Button> createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button> {
-  late ButtonStatus status;
-
-  @override
-  void initState() {
-    super.initState();
-    status = widget.initStatus;
-  }
-
-  void pressed() {
-    setState(() {
-      if (status != ButtonStatus.notSelected) {
-        status = ButtonStatus.notSelected;
-      } else {
-        status = ButtonStatus.selected;
-      }
-    });
-  }
+  bool selected = false;
+  ButtonStatus get status =>
+      selected ? ButtonStatus.selected : ButtonStatus.notSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +41,15 @@ class _ButtonState extends State<Button> {
       width: 400,
       height: 100,
       child: ElevatedButton(
-        onPressed: pressed,
+        onPressed: () => {
+          setState(() {
+            if (selected != false) {
+              selected = false;
+            } else {
+              selected = true;
+            }
+          }),
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: status.backgroundColor,
           foregroundColor: status.textColor,

@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FavoriteCard extends StatefulWidget {
-  const FavoriteCard({
-    super.key,
-    this.title = 'title',
-    this.description = 'description',
-  });
-
-  final String title;
-  final String description;
+  const FavoriteCard({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,18 +11,10 @@ class FavoriteCard extends StatefulWidget {
 
 class _FavoriteCardState extends State<FavoriteCard> {
   bool isFavorite = false;
+  IconData get getIcon => isFavorite ? Icons.favorite : Icons.favorite_border;
+  Color? get getIconColor => isFavorite ? Colors.red : null;
 
   @override
-  void toggle() {
-    setState(() {
-      if (isFavorite) {
-        isFavorite = false;
-      } else {
-        isFavorite = true;
-      }
-    });
-  }
-
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -44,14 +29,22 @@ class _FavoriteCardState extends State<FavoriteCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10,
               children: [
-                Text(widget.title, style: TextStyle(color: Colors.blue)),
-                Text(widget.description),
+                Text('title', style: TextStyle(color: Colors.blue)),
+                Text('description'),
               ],
             ),
           ),
           IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.favorite, color: Colors.red),
+            onPressed: () => {
+              setState(() {
+                if (isFavorite) {
+                  isFavorite = false;
+                } else {
+                  isFavorite = true;
+                }
+              }),
+            },
+            icon: Icon(getIcon, color: getIconColor,),
           ),
         ],
       ),
